@@ -6,96 +6,8 @@ import { useTheme } from '@/components/ThemeProvider';
 import { useLanguage } from '@/components/LanguageProvider';
 import AnimatedContent from '@/components/reactbits/AnimatedContent';
 import { X, ZoomIn } from 'lucide-react';
-
-/* ────────────────────────────────────────────────────────────────────
-   FOTO PORTFOLIO FOTOGRAFI
-   ──────────────────────────────────────────────────────────────────── */
-interface PhotoItem {
-  id: string;
-  url: string;
-  title: string;
-  category: string;
-  exif: {
-    camera: string;
-    lens: string;
-    iso: string;
-    shutter: string;
-    aperture: string;
-  };
-}
-
-const PHOTOS: PhotoItem[] = [
-  {
-    id: 'photo-1',
-    url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
-    title: 'The Golden Vow',
-    category: 'Ceremony / Portrait',
-    exif: { camera: 'Canon EOS R5', lens: '50mm f/1.2L', iso: 'ISO 100', shutter: '1/320s', aperture: 'f/1.4' },
-  },
-  {
-    id: 'photo-2',
-    url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80',
-    title: 'Neon Drift',
-    category: 'Street / Cyberpunk',
-    exif: { camera: 'Sony A7 IV', lens: '35mm f/1.4 GM', iso: 'ISO 800', shutter: '1/125s', aperture: 'f/1.8' },
-  },
-  {
-    id: 'photo-3',
-    url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
-    title: 'Geometric Solitude',
-    category: 'Architecture / Minimal',
-    exif: { camera: 'Fujifilm X-T5', lens: '23mm f/2.0', iso: 'ISO 160', shutter: '1/500s', aperture: 'f/5.6' },
-  },
-  {
-    id: 'photo-4',
-    url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80',
-    title: 'Midnight Radiance',
-    category: 'Editorial Studio',
-    exif: { camera: 'Canon EOS R6', lens: '85mm f/1.4L', iso: 'ISO 200', shutter: '1/200s', aperture: 'f/2.0' },
-  },
-  {
-    id: 'photo-5',
-    url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
-    title: 'Whispering Pines',
-    category: 'Landscape / Mood',
-    exif: { camera: 'Nikon Z7 II', lens: '24-70mm f/2.8', iso: 'ISO 64', shutter: '1/60s', aperture: 'f/8.0' },
-  },
-  {
-    id: 'photo-6',
-    url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80',
-    title: 'Shinjuku Rain',
-    category: 'Night City',
-    exif: { camera: 'Leica Q2', lens: '28mm Summilux', iso: 'ISO 1600', shutter: '1/80s', aperture: 'f/1.7' },
-  },
-  {
-    id: 'photo-7',
-    url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80',
-    title: 'Family Gathering',
-    category: 'Documentary',
-    exif: { camera: 'Canon PowerShot G7X', lens: '8.8-36.8mm', iso: 'ISO 250', shutter: '1/160s', aperture: 'f/2.8' },
-  },
-  {
-    id: 'photo-8',
-    url: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80',
-    title: 'Analog Summer',
-    category: 'Vintage 35mm',
-    exif: { camera: 'Canon AE-1', lens: '50mm f/1.8 FD', iso: 'Kodak Gold 200', shutter: '1/250s', aperture: 'f/4.0' },
-  },
-  {
-    id: 'photo-9',
-    url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80',
-    title: 'Candid Warmth',
-    category: 'Portraiture',
-    exif: { camera: 'Sony A7R V', lens: '50mm f/1.2 GM', iso: 'ISO 100', shutter: '1/400s', aperture: 'f/1.8' },
-  },
-  {
-    id: 'photo-10',
-    url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
-    title: 'Alpine Echoes',
-    category: 'Mountain Vista',
-    exif: { camera: 'Hasselblad X2D', lens: '38mm f/2.5', iso: 'ISO 100', shutter: '1/125s', aperture: 'f/11' },
-  },
-];
+import type { PhotoItem } from '@/lib/photos';
+import { fallbackPhotos } from '@/lib/photos';
 
 /* Suara tactile klik kamera mekanis (Web Audio API synthesized) */
 function playCameraClick(type: 'click' | 'shutter' = 'click') {
@@ -151,11 +63,12 @@ function playCameraClick(type: 'click' | 'shutter' = 'click') {
   }
 }
 
-export default function Photography() {
+export default function Photography({ photos: initialPhotos }: { photos?: PhotoItem[] } = {}) {
+  const photos = initialPhotos && initialPhotos.length > 0 ? initialPhotos : fallbackPhotos;
   const { theme } = useTheme();
   const { t } = useLanguage();
   const isDark = theme === 'dark';
-  const [index, setIndex] = useState(6); // Default foto #7
+  const [index, setIndex] = useState(() => Math.min(6, Math.max(photos.length - 1, 0))); // Default foto #7 (atau terakhir jika kurang)
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [showOSD, setShowOSD] = useState(true);
   const [colorMode, setColorMode] = useState<'normal' | 'vintage' | 'bw'>('normal');
@@ -164,8 +77,8 @@ export default function Photography() {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const N = PHOTOS.length;
-  const currentPhoto = PHOTOS[index];
+  const N = photos.length;
+  const currentPhoto = photos[index] ?? photos[0];
 
   const step = useCallback(
     (dir: 1 | -1) => {
@@ -220,6 +133,8 @@ export default function Photography() {
     if (colorMode === 'bw') return 'grayscale(1) contrast(1.2)';
     return 'none';
   };
+
+  if (!currentPhoto) return null;
 
   return (
     <section
@@ -365,7 +280,7 @@ export default function Photography() {
 
                 <div className="flex flex-col gap-0.5">
                   <div className="flex items-center justify-center gap-1 py-0.5">
-                    {PHOTOS.map((_, i) => (
+                    {photos.map((_, i) => (
                       <span
                         key={i}
                         className={`transition-all duration-300 rounded-full ${

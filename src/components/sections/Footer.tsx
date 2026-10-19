@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Profile } from '@/lib/supabase';
-import { Heart } from 'lucide-react';
+import { Heart, Lock } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons/BrandIcons';
 import { useLanguage } from '@/components/LanguageProvider';
 
@@ -56,6 +57,14 @@ export default function Footer({ profile }: FooterProps) {
               <TwitterIcon size={18} />
             </a>
           )}
+          <Link
+            href="/admin"
+            className="text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors p-1"
+            title="Admin Portal"
+            aria-label="Admin Portal"
+          >
+            <Lock size={14} />
+          </Link>
         </div>
       </div>
     </footer>

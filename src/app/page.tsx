@@ -10,13 +10,17 @@ import Footer from "@/components/sections/Footer";
 import ScrollVelocity from "@/components/reactbits/ScrollVelocity";
 import HeroDivider from "@/components/sections/HeroDivider";
 import { getProfile, getProjects, getSkills, getExperiences } from "@/lib/queries";
+import { getPhotos } from "@/lib/photos";
+
+export const instant = false;
 
 export default async function Home() {
-  const [profile, projects, skills, experiences] = await Promise.all([
+  const [profile, projects, skills, experiences, photos] = await Promise.all([
     getProfile(),
     getProjects(),
     getSkills(),
     getExperiences(),
+    getPhotos(),
   ]);
 
   return (
@@ -43,7 +47,7 @@ export default async function Home() {
         <Projects projects={projects} />
 
         {/* Photography Section */}
-        <Photography />
+        <Photography photos={photos} />
 
         {/* Scroll Velocity Divider */}
         <ScrollVelocity

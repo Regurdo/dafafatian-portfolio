@@ -5,17 +5,15 @@ import ImageTrail from '@/components/reactbits/ImageTrail';
 import { useLanguage } from '@/components/LanguageProvider';
 
 const HERO_TRAIL_IMAGES = [
-  'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
-  '/dafa-portrait.png',
-  'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+  '/trail/trail-1.webp',
+  '/trail/trail-2.webp',
+  '/trail/trail-3.webp',
+  '/trail/trail-4.webp',
+  '/trail/trail-5.webp',
+  '/trail/trail-6.webp',
+  '/trail/trail-7.webp',
+  '/trail/trail-8.webp',
+  '/trail/trail-9.webp',
 ];
 
 interface HeroProps {
